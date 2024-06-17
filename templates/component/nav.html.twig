@@ -1,1 +1,9 @@
-<nav id="nav">NAVBAR</nav>
+{% set links = [{'name': 'Lien 1', 'link':''}, {'name': 'Lien 2', 'link':''}, {'name': 'Lien 3', 'link':''}] %}
+
+<nav id="nav" class="flex_menu">
+	<ul>
+		{% for link in links %}
+			<li><a href="{{ link.link }}">{{ link.name }}</a></li>
+		{% endfor %}
+	</ul>
+</nav>
