@@ -2,9 +2,11 @@
 
 {% block main %}
 <div class="layout two_cols">
-	{% block side %}
-	{% endblock %}
-	{% block content %}
-	{% endblock %}
+	<aside>{% block side %}
+		{{ side }}
+	{% endblock %}</aside>
+	<section>{% block content %}
+		{{ content }}
+	{% endblock %}</section>
 </div>
 {% endblock %}
