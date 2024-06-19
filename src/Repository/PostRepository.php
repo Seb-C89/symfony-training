@@ -24,12 +24,28 @@ class PostRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            'SELECT DISTINCT p.game
+            "SELECT DISTINCT p.game
             FROM App\Entity\Post p
-            ORDER BY p.game ASC'
+            WHERE p.status = 'OK'
+            ORDER BY p.game ASC"
         );
 
         // returns an array of Product objects
+        return $query->getResult();
+    }
+
+    public function getMorePosts($id): array {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQueryBuilder()
+            ->select("p")
+            ->from('App\Entity\Post', 'p')
+            ->where("p.status = 'OK' AND p.id < :id")
+            ->orderBy('p.date', 'DESC')
+            ->setMaxResults(5)
+            ->setParameter('id', $id)
+            ->getQuery();
+
         return $query->getResult();
     }
 

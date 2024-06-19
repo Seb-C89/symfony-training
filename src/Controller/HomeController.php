@@ -11,19 +11,27 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
     #[Route('/gallery', name: 'gallery')]
-    public function index(PostRepository $postRepository): Response
+    #[Route('/gallery/{id}', name: 'gallery/slug')] #need different name because it will erase the precedent
+    public function index(PostRepository $postRepository, int $id=0): Response
     {
-        $Posts = $postRepository->findAll();
+        $Posts = $postRepository->findBy(['status' => 'OK'], ['date' => 'DESC'], 5);
         $Games = $postRepository->getAllDistinctGameName();
+
+        $last_id = end($Posts)->getId();
+
         dump($Posts);
         dump($Games);
+        dump($last_id);
+        dump($id);
+
         return $this->render('Page/Gallery.html.twig', [
             'posts' => array_map(function($post){
-                return (object)array('img' => "src", 'user_name' => $post->getUserName(), 'game' => $post->getGame());
+                return (object)array('img' => "src", 'user_name' => $post->getUserName(), 'game' => $post->getGame(), 'date' => $post->getDate()->format('d/m/Y'));
             }, $Posts),
             'games' => array_map(function($game){
                 return $game["game"];
-            }, $Games)
+            }, $Games),
+            'last_id' => $last_id,
         ]);
     }
 }
