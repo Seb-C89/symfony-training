@@ -16,6 +16,23 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    /**
+     * @return Post[]
+     */
+    public function getAllDistinctGameName(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT DISTINCT p.game
+            FROM App\Entity\Post p
+            ORDER BY p.game ASC'
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */
