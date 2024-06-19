@@ -1,0 +1,13 @@
+{% extends '@layout/two_cols.html.twig' %}
+
+{% set title = "Gallery" %}
+
+{% block side %}
+    {% include '@component/game_menu.html.twig' with {'games': games}  %}
+{% endblock %}
+
+{% block content %}
+	{% for post in posts %}
+        {% include '@component/card.html.twig' with {'post': post}  %}
+    {% endfor %}
+{% endblock %}

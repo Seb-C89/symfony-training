@@ -3,6 +3,7 @@ twig:
     paths:
         'templates/layout': 'layout'
         'templates/component': 'component'
+        'templates/Page': 'Page'
 
 when@test:
     twig:
