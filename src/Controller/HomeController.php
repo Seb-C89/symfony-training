@@ -19,10 +19,10 @@ class HomeController extends AbstractController
 
         $last_id = end($Posts)->getId();
 
-        dump($Posts);
+        /*dump($Posts);
         dump($Games);
         dump($last_id);
-        dump($id);
+        dump($id);*/
 
         return $this->render('Page/Gallery.html.twig', [
             'posts' => array_map(function($post){
