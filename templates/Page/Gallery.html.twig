@@ -12,5 +12,5 @@
             {% include '@component/card.html.twig' with {'post': post}  %}
         {% endfor %}
     {%  endblock %}
-    <button id="getMore" data-lastid="{{ last_id }}">GET MORE</button>
+    <button id="getMore" onclick="getMore(this.dataset.lastid, this)" data-lastid="{{ last_id }}">GET MORE</button>
 {% endblock %}
