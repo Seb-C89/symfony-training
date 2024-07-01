@@ -4,4 +4,7 @@
 
 {% block content %}
     {{ form(form) }}
+    {% if magickLink %}
+        <p>You should receive this link in your mailbox, but emailing is not yet implemented...<br /> <a href="{{ magickLink }}">{{ magickLink }}</a></p>
+    {%  endif %}
 {% endblock %}

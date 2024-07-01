@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User;
 use App\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function login(Request $request): Response
+    public function login(Request $request, UserRepository $userRepository, LoginLinkHandlerInterface $loginLinkHandler): Response
     {
+        dump($this->getUser());
         $user = new User();
 		
 		$form = $this->createForm(LoginType::class, $user);
@@ -21,11 +24,19 @@ class LoginController extends AbstractController
 		$form->handleRequest($request);
         
 		if ($form->isSubmitted() && $form->isValid()) {
-			dump($user);
+            dump($user);
+            if ($user->getMail()) {
+                $user_from_db = $userRepository->findOneBy(['mail' => $user->getMail()]);
+                if($user_from_db) {
+                    $loginLinkDetails = $loginLinkHandler->createLoginLink($user_from_db);
+                    $magickLink = $loginLinkDetails->getUrl();
+                }
+            }
 		}
 		
 		return $this->render('Page\Login.html.twig', [
-			'form' => $form
+			'form' => $form,
+            'magickLink' => ($magickLink ?? null)
 		]);
     }
 }
