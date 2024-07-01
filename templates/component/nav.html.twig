@@ -1,15 +1,29 @@
+{#
 {% set links = [
 	{'name': 'Home', 'link':'/'},
 	{'name': 'About', 'link':'/about'},
-	{'name': 'Ajouter', 'link':'/add'},
-	{'name': 'Login', 'link':'/login'},
-	{'name': 'Contact', 'link':'/contact'}
+	{'name': (app.user ? 'Logout' : 'Login'), 'link':(app.user ? '/logout' : '/login')},
 ] %}
+
+{%  if app.user %}
+	{% set links = links|merge([
+		{'name': 'Contact', 'link':'/contact'}
+	]) %}
+{%  endif %}
+#}
 
 <nav id="nav" class="flex_menu">
 	<ul>
+		{#
 		{% for link in links %}
 			<li><a href="{{ link.link }}">{{ link.name }}</a></li>
 		{% endfor %}
+		#}
+		<li><a href="{{ path('home') }}">Home</a></li>
+		<li><a href="{{ path('about') }}">About</a></li>
+		<li><a href="{{ app.user ? logout_path() : path('login') }}">{{ (app.user ? 'Logout' : 'Login') }}</a></li>
+		{% if app.user %}
+			<li><a href="{{ path('contact') }}">Contact</a></li>
+		{% endif %}
 	</ul>
 </nav>
