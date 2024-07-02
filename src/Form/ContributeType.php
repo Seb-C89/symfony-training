@@ -18,7 +18,9 @@ class ContributeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user_name')
+            ->add('user_name', null, [
+                'help' => 'Choose whatever pseudo you want. You can changer everytime you want. Pseudo are not reserved.'
+            ])
             ->add('game')
             ->add('screenshoot', FileType::class, ['mapped' => false])
             ->add('submit', SubmitType::class)
