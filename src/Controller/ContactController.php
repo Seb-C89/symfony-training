@@ -25,7 +25,6 @@ class ContactController extends AbstractController
 			$entityManager->persist($message);
 			$entityManager->flush();
 			dump($message);
-			
 		}
 		
 		return $this->render('Page\Contact.html.twig', [

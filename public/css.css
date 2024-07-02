@@ -39,6 +39,10 @@ a:hover {
 	border-bottom: 2px solid lightgray;
 }
 
+.card img {
+	height: 50px;
+}
+
 .layout{
 	max-height: 100%;
 	max-width: 100%;

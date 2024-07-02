@@ -23,6 +23,7 @@
 		<li><a href="{{ path('about') }}">About</a></li>
 		<li><a href="{{ app.user ? logout_path() : path('login') }}">{{ (app.user ? 'Logout' : 'Login') }}</a></li>
 		{% if app.user %}
+			<li><a href="{{ path('contribute') }}">Contribute</a></li>
 			<li><a href="{{ path('contact') }}">Contact</a></li>
 		{% endif %}
 	</ul>

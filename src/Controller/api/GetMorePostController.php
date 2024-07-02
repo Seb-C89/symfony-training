@@ -18,7 +18,7 @@ class GetMorePostController extends AbstractController
         return new JsonResponse(array(
             'posts' => $this->renderBlockView('@Page/Gallery.html.twig', "gallery", [
                 'posts' => array_map(function($post){
-                    return (object)array('img' => "src", 'user_name' => $post->getUserName(), 'game' => $post->getGame(), 'date' => $post->getDate()->format('d/m/Y'));
+                    return (object)array('img' => $post->getFile()->getName(), 'user_name' => $post->getUserName(), 'game' => $post->getGame(), 'date' => $post->getDate()->format('d/m/Y'));
                 }, $Posts)
             ]),
             'lastid' => end($Posts) ? current($Posts)->getId() : -1

@@ -41,6 +41,7 @@ class PostRepository extends ServiceEntityRepository
             ->select("p")
             ->from('App\Entity\Post', 'p')
             ->where("p.status = 'OK' AND p.id < :id")
+            ->innerJoin("p.file", "f", 'p.file = f.id')
             ->orderBy('p.date', 'DESC')
             ->setMaxResults(5)
             ->setParameter('id', $id)

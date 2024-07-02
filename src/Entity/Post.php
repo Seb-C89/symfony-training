@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +33,26 @@ class Post
 
     #[ORM\Column]
     private ?bool $check_box = null;
+
+    #[ORM\OneToOne(mappedBy: 'post', cascade: ['persist', 'remove'])]
+    private ?File $file = null;
+
+    /**
+     * @param int|null $id
+     * @param string|null $user_name
+     * @param User|null $user_id
+     * @param \DateTimeInterface|null $date
+     * @param string|null $game
+     * @param string|null $status
+     * @param bool|null $check_box
+     */
+    public function __construct(User $user)
+    {
+        $this->setDate(new DatetimeImmutable())
+            ->setStatus('OK')
+            ->setUserId($user)
+            ->setCheckBox(false);
+    }
 
     public function getId(): ?int
     {
@@ -113,6 +134,23 @@ class Post
     public function setCheckBox(bool $check_box): static
     {
         $this->check_box = $check_box;
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(File $file): static
+    {
+        // set the owning side of the relation if necessary
+        if ($file->getPost() !== $this) {
+            $file->setPost($this);
+        }
+
+        $this->file = $file;
 
         return $this;
     }

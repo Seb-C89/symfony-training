@@ -16,7 +16,6 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request, UserRepository $userRepository, LoginLinkHandlerInterface $loginLinkHandler): Response
     {
-        dump($this->getUser());
         $user = new User();
 		
 		$form = $this->createForm(LoginType::class, $user);
@@ -24,8 +23,7 @@ class LoginController extends AbstractController
 		$form->handleRequest($request);
         
 		if ($form->isSubmitted() && $form->isValid()) {
-            dump($user);
-            if ($user->getMail()) {
+            if ($user->getMail()) { // TODO redundant with $form->isvalid() ?
                 $user_from_db = $userRepository->findOneBy(['mail' => $user->getMail()]);
                 if($user_from_db) {
                     $loginLinkDetails = $loginLinkHandler->createLoginLink($user_from_db);

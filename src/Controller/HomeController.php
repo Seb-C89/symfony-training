@@ -26,7 +26,7 @@ class HomeController extends AbstractController
 
         return $this->render('Page/Gallery.html.twig', [
             'posts' => array_map(function($post){
-                return (object)array('img' => "src", 'user_name' => $post->getUserName(), 'game' => $post->getGame(), 'date' => $post->getDate()->format('d/m/Y'));
+                return (object)array('img' => $post->getFile()->getName(), 'user_name' => $post->getUserName(), 'game' => $post->getGame(), 'date' => $post->getDate()->format('d/m/Y'));
             }, $Posts),
             'games' => array_map(function($game){
                 return $game["game"];

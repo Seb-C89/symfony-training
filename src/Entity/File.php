@@ -21,6 +21,7 @@ class File
     private ?\DateTimeInterface $date = null;
 
     #[ORM\OneToOne(inversedBy: 'file', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Post $post = null;
 
     #[ORM\Column(type: Types::ASCII_STRING, nullable: true)]
@@ -28,6 +29,22 @@ class File
 
     #[ORM\Column(type: Types::ASCII_STRING, nullable: true)]
     private $client_ext = null;
+
+    /**
+     * @param $name
+     * @param null $client_ext
+     * @param null $client_name
+     * @param Post|null $post
+     */
+    public function __construct($name, null $client_ext, null $client_name, ?Post $post)
+    {
+        $this->date = new \DateTimeImmutable();
+        $this->name = $name;
+        $this->client_ext = $client_ext;
+        $this->client_name = $client_name;
+        $this->post = $post;
+    }
+
 
     public function getId(): ?int
     {
