@@ -31,6 +31,7 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: ['mail']
+                default_target_path: home
 
             logout:
                 path: /logout
