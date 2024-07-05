@@ -1,4 +1,4 @@
 <article class="card">
-    <img src="{{ asset("uploads/"~post.img) }}">
+    <img src="{{ path('upload')~'/'~post.img }}">
     <p>Poted by {{ post.user_name }}<br />In {{ post.game }}<br />le {{ post.date }}</p>
 </article>
